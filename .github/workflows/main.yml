@@ -1,0 +1,26 @@
+name: Run Daily JavaScript Script
+
+on:
+  schedule:
+    # Minden nap reggel 8-kor fut (UTC időzóna!)
+    - cron: '0 8 * * *'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Vagy amilyen verziót használsz
+
+      - name: Install dependencies (if any)
+        # Ha a scripted használ külső csomagokat (pl. axios, lodash),
+        # akkor futtasd az npm install-t. Ha nincs package.json, törölheted ezt a lépést.
+        run: npm install
+
+      - name: Run script
+        run: node elsocsop.js # Ide a scripted nevét írd
